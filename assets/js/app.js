@@ -170,7 +170,7 @@ var homes = L.geoJson(null,{
   pointToLayer: function(feature, latlng){
     return L.marker(latlng,{
       icon:L.icon({
-        iconUrl:"assets/img/museum.png",
+        iconUrl:"assets/img/location.png",
         iconSize: [24,28],
         iconAnchor:[12,28],
         popupAnchor:[0,-25]
@@ -189,7 +189,7 @@ var homes = L.geoJson(null,{
           highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
         }
       });
-      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/museum.png"></td><td class="feature-name">' + layer.feature.properties.Name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/location.png"></td><td class="feature-name">' + layer.feature.properties.Name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       homeSearch.push({
         name:layer.feature.properties.Name,
         address:layer.feature.properties.Email,
