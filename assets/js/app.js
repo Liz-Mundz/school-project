@@ -1,4 +1,4 @@
-var map,  featureList, homeSearch=[], boroughSearch = [], theaterSearch = [], museumSearch = [];
+var map,  featureList, homeSearch=[]; //, boroughSearch = [], theaterSearch = [], museumSearch = [];
 
 $(window).resize(function() {
   sizeLayerControl();
@@ -91,28 +91,13 @@ function sidebarClick(id) {
 function syncSidebar() {
   /* Empty sidebar features */
   $("#feature-list tbody").empty();
-  /* Loop through theaters layer and add only features which are in the map bounds */
-  theaters.eachLayer(function (layer) {
-    if (map.hasLayer(theaterLayer)) {
-      if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/theater.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
-      }
-    }
-  });
-  /* Loop through museums layer and add only features which are in the map bounds */
-  museums.eachLayer(function (layer) {
-    if (map.hasLayer(museumLayer)) {
-      if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/museum.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
-      }
-    }
-  });
+  
   /*Loop through homes layer and add features which are in the map bounds */
-  homes.eachlayer(function(layer){
-    if(map.haslayer(homeLayer)){
-      if(map.getBounds().contains(layer.getLatLng())){
-       $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/museum.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');  
-      }
+  homes.eachLayer(function(layer){
+    if(map.hasLayer(homes)){
+        if(map.getBounds().contains(layer.getLatLng())){
+            $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/museum.png"></td><td class="feature-name">' + layer.feature.properties.Name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');  
+        }
     }
   })
   /* Update list.js featureList */
@@ -149,77 +134,27 @@ var highlightStyle = {
   radius: 10
 };
 
-var boroughs = L.geoJson(null, {
-  style: function (feature) {
-    return {
-      color: "black",
-      fill: false,
-      opacity: 1,
-      clickable: false
-    };
-  },
-  onEachFeature: function (feature, layer) {
-    boroughSearch.push({
-      name: layer.feature.properties.BoroName,
-      source: "Boroughs",
-      id: L.stamp(layer),
-      bounds: layer.getBounds()
-    });
-  }
-});
-$.getJSON("data/boroughs.geojson", function (data) {
-  boroughs.addData(data);
-});
-
-//Create a color dictionary based off of subway route_id
-var subwayColors = {"1":"#ff3135", "2":"#ff3135", "3":"ff3135", "4":"#009b2e",
-    "5":"#009b2e", "6":"#009b2e", "7":"#ce06cb", "A":"#fd9a00", "C":"#fd9a00",
-    "E":"#fd9a00", "SI":"#fd9a00","H":"#fd9a00", "Air":"#ffff00", "B":"#ffff00",
-    "D":"#ffff00", "F":"#ffff00", "M":"#ffff00", "G":"#9ace00", "FS":"#6e6e6e",
-    "GS":"#6e6e6e", "J":"#976900", "Z":"#976900", "L":"#969696", "N":"#ffff00",
-    "Q":"#ffff00", "R":"#ffff00" };
-
-var subwayLines = L.geoJson(null, {
-  style: function (feature) {
-      return {
-        color: subwayColors[feature.properties.route_id],
-        weight: 3,
-        opacity: 1
-      };
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Division</th><td>" + feature.properties.Division + "</td></tr>" + "<tr><th>Line</th><td>" + feature.properties.Line + "</td></tr>" + "<table>";
-      layer.on({
-        click: function (e) {
-          $("#feature-title").html(feature.properties.Line);
-          $("#feature-info").html(content);
-          $("#featureModal").modal("show");
-
-        }
-      });
-    }
-    layer.on({
-      mouseover: function (e) {
-        var layer = e.target;
-        layer.setStyle({
-          weight: 3,
-          color: "#00FFFF",
-          opacity: 1
-        });
-        if (!L.Browser.ie && !L.Browser.opera) {
-          layer.bringToFront();
-        }
-      },
-      mouseout: function (e) {
-        subwayLines.resetStyle(e.target);
-      }
-    });
-  }
-});
-$.getJSON("data/subways.geojson", function (data) {
-  subwayLines.addData(data);
-});
+// var boroughs = L.geoJson(null, {
+//   style: function (feature) {
+//     return {
+//       color: "black",
+//       fill: false,
+//       opacity: 1,
+//       clickable: false
+//     };
+//   },
+//   onEachFeature: function (feature, layer) {
+//     boroughSearch.push({
+//       name: layer.feature.properties.BoroName,
+//       source: "Boroughs",
+//       id: L.stamp(layer),
+//       bounds: layer.getBounds()
+//     });
+//   }
+// });
+// $.getJSON("data/boroughs.geojson", function (data) {
+//   boroughs.addData(data);
+// });
 
 /* Single marker cluster layer to hold all clusters */
 var markerClusters = new L.MarkerClusterGroup({
@@ -229,98 +164,13 @@ var markerClusters = new L.MarkerClusterGroup({
   disableClusteringAtZoom: 16
 });
 
-/* Empty layer placeholder to add to layer control for listening when to add/remove theaters to markerClusters layer */
-var theaterLayer = L.geoJson(null);
-var theaters = L.geoJson(null, {
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      icon: L.icon({
-        iconUrl: "assets/img/theater.png",
-        iconSize: [24, 28],
-        iconAnchor: [12, 28],
-        popupAnchor: [0, -25]
-      }),
-      title: feature.properties.NAME,
-      riseOnHover: true
-    });
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Phone</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Address</th><td>" + feature.properties.ADDRESS1 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.URL + "' target='_blank'>" + feature.properties.URL + "</a></td></tr>" + "<table>";
-      layer.on({
-        click: function (e) {
-          $("#feature-title").html(feature.properties.NAME);
-          $("#feature-info").html(content);
-          $("#featureModal").modal("show");
-          highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
-        }
-      });
-      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/theater.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
-      theaterSearch.push({
-        name: layer.feature.properties.NAME,
-        address: layer.feature.properties.ADDRESS1,
-        source: "Theaters",
-        id: L.stamp(layer),
-        lat: layer.feature.geometry.coordinates[1],
-        lng: layer.feature.geometry.coordinates[0]
-      });
-    }
-  }
-});
-$.getJSON("data/DOITT_THEATER_01_13SEPT2010.geojson", function (data) {
-  theaters.addData(data);
-  map.addLayer(theaterLayer);
-});
-
-/* Empty layer placeholder to add to layer control for listening when to add/remove museums to markerClusters layer */
-var museumLayer = L.geoJson(null);
-var museums = L.geoJson(null, {
-  pointToLayer: function (feature, latlng) {
-    return L.marker(latlng, {
-      icon: L.icon({
-        iconUrl: "assets/img/museum.png",
-        iconSize: [24, 28],
-        iconAnchor: [12, 28],
-        popupAnchor: [0, -25]
-      }),
-      title: feature.properties.NAME,
-      riseOnHover: true
-    });
-  },
-  onEachFeature: function (feature, layer) {
-    if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Phone</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Address</th><td>" + feature.properties.ADRESS1 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.URL + "' target='_blank'>" + feature.properties.URL + "</a></td></tr>" + "<table>";
-      layer.on({
-        click: function (e) {
-          $("#feature-title").html(feature.properties.NAME);
-          $("#feature-info").html(content);
-          $("#featureModal").modal("show");
-          highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
-        }
-      });
-      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/museum.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
-      museumSearch.push({
-        name: layer.feature.properties.NAME,
-        address: layer.feature.properties.ADRESS1,
-        source: "Museums",
-        id: L.stamp(layer),
-        lat: layer.feature.geometry.coordinates[1],
-        lng: layer.feature.geometry.coordinates[0]
-      });
-    }
-  }
-});
-$.getJSON("data/DOITT_MUSEUM_01_13SEPT2010.geojson", function (data) {
-  museums.addData(data);
-});
-
 /* Empty layer placeholder to add to layer control for listening when to add/remove homes to markerClusters layer */
 var homesLayer = L.geoJson(null);
 var homes = L.geoJson(null,{
   pointToLayer: function(feature, latlng){
     return L.marker(latlng,{
       icon:L.icon({
-        iconUrl:"assets/img/favicon-76.png",
+        iconUrl:"assets/img/museum.png",
         iconSize: [24,28],
         iconAnchor:[12,28],
         popupAnchor:[0,-25]
@@ -336,7 +186,7 @@ var homes = L.geoJson(null,{
         click: function(e){
           $("#feature-title").html(feature.properties.Name);
           $("#feature-info").modal("show");
-          highlight.clearlayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
+          highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
         }
       });
       $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/museum.png"></td><td class="feature-name">' + layer.feature.properties.Name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
@@ -353,28 +203,18 @@ var homes = L.geoJson(null,{
 });
 $.getJSON("data/Results.json", function(data){
   homes.addData(data);
+  map.addLayer(homes);
 });
 
 map = L.map("map", {
   zoom: 12,
-    center: [-1.2921, 36.8219],
-  layers: [cartoLight, boroughs, markerClusters, highlight],
+  center: [-1.2921, 36.8219],
+  layers: [cartoLight, markerClusters, highlight],
   zoomControl: false,
   attributionControl: false
 });
 
 /* Layer control listeners that allow for a single markerClusters layer */
-// map.on("overlayadd", function(e) {
-//   if (e.layer === theaterLayer) {
-//     markerClusters.addLayer(theaters);
-//     syncSidebar();
-//   }
-//   if (e.layer === museumLayer) {
-//     markerClusters.addLayer(museums);
-//     syncSidebar();
-//   }
-// });
-
 map.on("overlayadd", function(e){
   if(e.layer === homesLayer){
     markerClusters.addLayer(homes);
@@ -382,53 +222,47 @@ map.on("overlayadd", function(e){
   }
 });
 
-// map.on("overlayremove", function(e) {
-//   if (e.layer === theaterLayer) {
-//     markerClusters.removeLayer(theaters);
-//     syncSidebar();
-//   }
-//   if (e.layer === museumLayer) {
-//     markerClusters.removeLayer(museums);
-//     syncSidebar();
-//   }
-// });
+map.on("overlayremove", function(e) {
+  if (e.layer === homesLayer) {
+    markerClusters.removeLayer(homes);
+    syncSidebar();
+  }
+});
 
+/* Filter sidebar feature list to only show features in current map bounds */
+map.on("moveend", function (e) {
+  syncSidebar();
+});
 
+/* Clear feature highlight when map is clicked */
+map.on("click", function(e) {
+  highlight.clearLayers();
+});
 
-// /* Filter sidebar feature list to only show features in current map bounds */
-// map.on("moveend", function (e) {
-//   syncSidebar();
-// });
+/* Attribution control */
+function updateAttribution(e) {
+  $.each(map._layers, function(index, layer) {
+    if (layer.getAttribution) {
+      $("#attribution").html((layer.getAttribution()));
+    }
+  });
+}
+map.on("layeradd", updateAttribution);
+map.on("layerremove", updateAttribution);
 
-// /* Clear feature highlight when map is clicked */
-// map.on("click", function(e) {
-//   highlight.clearLayers();
-// });
-
-// /* Attribution control */
-// function updateAttribution(e) {
-//   $.each(map._layers, function(index, layer) {
-//     if (layer.getAttribution) {
-//       $("#attribution").html((layer.getAttribution()));
-//     }
-//   });
-// }
-// map.on("layeradd", updateAttribution);
-// map.on("layerremove", updateAttribution);
-
-// // var attributionControl = L.control({
-// //   position: "bottomright"
-// // });
-// // attributionControl.onAdd = function (map) {
-// //   var div = L.DomUtil.create("div", "leaflet-control-attribution");
-// //   div.innerHTML = "<span class='hidden-xs'>Developed by <a href='http://bryanmcbride.com'>bryanmcbride.com</a> | </span><a href='#' onclick='$(\"#attributionModal\").modal(\"show\"); return false;'>Attribution</a>";
-// //   return div;
-// // };
-// // map.addControl(attributionControl);
-
-// var zoomControl = L.control.zoom({
+// var attributionControl = L.control({
 //   position: "bottomright"
-// }).addTo(map);
+// });
+// attributionControl.onAdd = function (map) {
+//   var div = L.DomUtil.create("div", "leaflet-control-attribution");
+//   div.innerHTML = "<span class='hidden-xs'>Developed by <a href='http://bryanmcbride.com'>bryanmcbride.com</a> | </span><a href='#' onclick='$(\"#attributionModal\").modal(\"show\"); return false;'>Attribution</a>";
+//   return div;
+// };
+// map.addControl(attributionControl);
+
+var zoomControl = L.control.zoom({
+  position: "bottomright"
+}).addTo(map);
 
 // /* GPS enabled geolocation control set to follow the user's location */
 // var locateControl = L.control.locate({
@@ -462,17 +296,17 @@ map.on("overlayadd", function(e){
 //   }
 // }).addTo(map);
 
-// /* Larger screens get expanded layer control and visible sidebar */
-// if (document.body.clientWidth <= 767) {
-//   var isCollapsed = true;
-// } else {
-//   var isCollapsed = false;
-// }
+/* Larger screens get expanded layer control and visible sidebar */
+if (document.body.clientWidth <= 767) {
+  var isCollapsed = true;
+} else {
+  var isCollapsed = false;
+}
 
-// var baseLayers = {
-//   "Street Map": cartoLight,
-//   "Aerial Imagery": usgsImagery
-// };
+var baseLayers = {
+  "Street Map": cartoLight,
+  "Aerial Imagery": usgsImagery
+};
 
 // var groupedOverlays = {
 //   "Points of Interest": {
@@ -489,21 +323,21 @@ map.on("overlayadd", function(e){
 //   collapsed: isCollapsed
 // }).addTo(map);
 
-// /* Highlight search box text on click */
-// $("#searchbox").click(function () {
-//   $(this).select();
-// });
+/* Highlight search box text on click */
+$("#searchbox").click(function () {
+  $(this).select();
+});
 
-// /* Prevent hitting enter from refreshing the page */
-// $("#searchbox").keypress(function (e) {
-//   if (e.which == 13) {
-//     e.preventDefault();
-//   }
-// });
+/* Prevent hitting enter from refreshing the page */
+$("#searchbox").keypress(function (e) {
+  if (e.which == 13) {
+    e.preventDefault();
+  }
+});
 
-// $("#featureModal").on("hidden.bs.modal", function (e) {
-//   $(document).on("mouseout", ".feature-row", clearHighlight);
-// });
+$("#featureModal").on("hidden.bs.modal", function (e) {
+  $(document).on("mouseout", ".feature-row", clearHighlight);
+});
 
 // /* Typeahead search functionality */
 // $(document).one("ajaxStop", function () {
