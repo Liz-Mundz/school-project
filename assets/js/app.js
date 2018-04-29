@@ -311,20 +311,15 @@ var baseLayers = {
   "Aerial Imagery": usgsImagery
 };
 
-// var groupedOverlays = {
-//   "Points of Interest": {
-//     "<img src='assets/img/theater.png' width='24' height='28'>&nbsp;Theaters": theaterLayer,
-//     "<img src='assets/img/museum.png' width='24' height='28'>&nbsp;Museums": museumLayer
-//   },
-//   "Reference": {
-//     "Boroughs": boroughs,
-//     "Subway Lines": subwayLines
-//   }
-// };
+var groupedOverlays = {
+    "Centers": {
+        "<img src='assets/img/location.png' width='24' height='28'>&nbsp;Homes": homes
+    }
+};
 
-// var layerControl = L.control.groupedLayers(baseLayers, groupedOverlays, {
-//   collapsed: isCollapsed
-// }).addTo(map);
+var layerControl = L.control.groupedLayers(baseLayers, groupedOverlays, {
+  collapsed: isCollapsed
+}).addTo(map);
 
 /* Highlight search box text on click */
 $("#searchbox").click(function () {
