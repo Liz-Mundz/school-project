@@ -179,13 +179,14 @@ var homes = L.geoJson(null,{
       riseOnHover:true
     });
   },
-  onEachFeature: function(feature,layer){
+  onEachFeature: function(feature, layer){
     if(feature.properties){
       var content ="<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.Name + "</td></tr>" + "<tr><th>Phone</th><td>" + feature.properties.Phone + "</td></tr>" + "<tr><th>Address</th><td>" + feature.properties.Email + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.Website + "' target='_blank'>" + feature.properties.Website + "</a></td></tr>" + "<table>";
       layer.on({
         click: function(e){
           $("#feature-title").html(feature.properties.Name);
-          $("#feature-info").modal("show");
+          $("#feature-info").html(content);
+          $("#featureModal").modal("show");
           highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
         }
       });
@@ -209,7 +210,7 @@ $.getJSON("data/Results.json", function(data){
 map = L.map("map", {
   zoom: 12,
   center: [-1.2921, 36.8219],
-  layers: [cartoLight, markerClusters, highlight],
+  layers: [cartoLight, highlight],
   zoomControl: false,
   attributionControl: false
 });
