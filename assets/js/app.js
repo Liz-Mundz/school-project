@@ -78,7 +78,7 @@ function clearHighlight() {
 }
 
 function sidebarClick(id) {
-  var layer = markerClusters.getLayer(id);
+  var layer = homes.getLayer(id);
   map.setView([layer.getLatLng().lat, layer.getLatLng().lng], 17);
   layer.fire("click");
   /* Hide sidebar and go to the map on small screens */
@@ -96,7 +96,7 @@ function syncSidebar() {
   homes.eachLayer(function(layer){
     if(map.hasLayer(homes)){
         if(map.getBounds().contains(layer.getLatLng())){
-            $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/museum.png"></td><td class="feature-name">' + layer.feature.properties.Name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');  
+            $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/location.png"></td><td class="feature-name">' + layer.feature.properties.Name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
         }
     }
   })
