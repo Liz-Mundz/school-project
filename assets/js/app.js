@@ -146,7 +146,7 @@ var county = L.geoJson(null, {
   onEachFeature: function (feature, layer) {
     countySearch.push({
       name: layer.feature.properties.COUNTY,
-      source: "Nairobi",
+      source: "County",
       id: L.stamp(layer),
       bounds: layer.getBounds()
     });
@@ -194,10 +194,10 @@ var homes = L.geoJson(null,{
       });
       $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/location.png"></td><td class="feature-name">' + layer.feature.properties.Name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       homeSearch.push({
-        name:layer.feature.properties.Name,
-        address:layer.feature.properties.Email,
-        source:"Homes",
-        id:L.stamp(layer),
+        name: layer.feature.properties.Name,
+        address: layer.feature.properties.Email,
+        source: "Homes",
+        id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],
         lng: layer.feature.geometry.coordinates[0]
       });
