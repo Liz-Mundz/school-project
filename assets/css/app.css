@@ -50,7 +50,7 @@ input[type="radio"], input[type="checkbox"] {
   color: #FFFFFF;
 }
 .panel-heading{
-   width: 250px;
+   width: 100%;
 }
 .panel-body{
   width: 250px;
