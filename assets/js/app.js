@@ -134,27 +134,27 @@ var highlightStyle = {
   radius: 10
 };
 
-// var boroughs = L.geoJson(null, {
-//   style: function (feature) {
-//     return {
-//       color: "black",
-//       fill: false,
-//       opacity: 1,
-//       clickable: false
-//     };
-//   },
-//   onEachFeature: function (feature, layer) {
-//     boroughSearch.push({
-//       name: layer.feature.properties.BoroName,
-//       source: "Boroughs",
-//       id: L.stamp(layer),
-//       bounds: layer.getBounds()
-//     });
-//   }
-// });
-// $.getJSON("data/boroughs.geojson", function (data) {
-//   boroughs.addData(data);
-// });
+var county = L.geoJson(null, {
+  style: function (feature) {
+    return {
+      color: "black",
+      fill: false,
+      opacity: 1,
+      clickable: false
+    };
+  },
+  onEachFeature: function (feature, layer) {
+    countySearch.push({
+      name: layer.feature.properties.COUNTY,
+      source: "Nairobi",
+      id: L.stamp(layer),
+      bounds: layer.getBounds()
+    });
+  }
+});
+$.getJSON("data/Nairobi.json", function (data) {
+  county.addData(data);
+});
 
 /* Single marker cluster layer to hold all clusters */
 var markerClusters = new L.MarkerClusterGroup({
@@ -212,7 +212,7 @@ $.getJSON("data/Results.json", function(data){
 map = L.map("map", {
   zoom: 12,
   center: [-1.2921, 36.8219],
-  layers: [cartoLight, highlight],
+  layers: [cartoLight, county, highlight],
   zoomControl: false,
   attributionControl: false
 });
