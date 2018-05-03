@@ -4,7 +4,7 @@ School project
 An undergraduate project with the aim of providing information on children homes within Nairobi County.
 
 ### Demo:
-http://bmcbride.github.io/bootleaf/
+https://liz-mundz.github.io/school-project/
 
 ### Features:
 The General objective of the project is: 
